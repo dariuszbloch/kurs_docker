@@ -90,6 +90,6 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            cd ~/deploy
+            cd ~/deploy_${{ secrets.VPS_USER }}/
             docker compose -f docker-compose-prod.yml pull
             docker compose -f docker-compose-prod.yml up -d
