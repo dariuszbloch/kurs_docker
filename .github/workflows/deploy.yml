@@ -82,7 +82,16 @@ jobs:
           source: "docker-compose-prod.yml"
           target: "~/deploy_${{ secrets.VPS_USER }}/"
           debug: true
-
+      - name: Copy .env to VPS
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          source: ".env"
+          target: "~/deploy_${{ secrets.VPS_USER }}/"
+          debug: true
+:
       - name: Run deployment on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
