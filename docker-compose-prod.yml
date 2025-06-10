@@ -1,7 +1,9 @@
 services:
   nginx:
     image: dariuszbloch/moja-aplikacja-nginx:latest
-    container_name: nginx
+    container_name: ${IMAGE_NAME}-NGINX
+    env_file:
+      - .env
     ports:
       - "8081:80"
     depends_on:
@@ -11,13 +13,17 @@ services:
 
   php:
     image: dariuszbloch/moja-aplikacja-php:latest
-    container_name: php
+    container_name: ${IMAGE_NAME}-PHP
+    env_file:
+      - .env
     networks:
       - backend
 
   db:
     image: dariuszbloch/moja-aplikacja-sql:latest
-    container_name: mysql-db
+    container_name: ${IMAGE_NAME}-MYSQL
+    env_file:
+      - .env
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: testdb
