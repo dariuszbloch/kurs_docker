@@ -1,3 +1,4 @@
+<h2>Appka zmiana</h2>
 <?php
 $dsn = 'mysql:host=db;dbname=testdb;charset=utf8';
 $user = 'testuser';
