@@ -1,5 +1,5 @@
 <html>
-<h2>Appka zmiana</h2>
+<h2>Appka zmiana-darek</h2>
 </html>
 <?php
 $dsn = 'mysql:host=db;dbname=testdb;charset=utf8';
