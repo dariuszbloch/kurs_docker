@@ -69,7 +69,9 @@ jobs:
       - name: Copy docker-compose to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: localhost
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }
           source: "docker-compose-prod-swarm.yml"
           target: "/app/deploy_${{ secrets.VPS_USER }}/"
           debug: true
@@ -77,7 +79,9 @@ jobs:
       - name: Copy .env to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: localhost
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }
           source: ".env"
           target: "/app/deploy_${{ secrets.VPS_USER }}/"
           debug: true
