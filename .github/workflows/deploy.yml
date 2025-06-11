@@ -66,13 +66,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: List workspace for debug
-        run: |
-            echo "Biezacy katalog"
-            pwd
-            echo "Zawartosc:"
-            ls -lah
-
       - name: Copy docker-compose to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -101,5 +94,5 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             cd ~/deploy_${{ secrets.VPS_USER }}/
-            docker compose -f docker-compose-prod.yml pull
-            docker compose -f docker-compose-prod.yml up -d
+            docker compose -f docker-compose-prod-swarm.yml pull
+            docker compose -f docker-compose-prod-swarm.yml up -d
