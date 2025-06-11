@@ -69,30 +69,24 @@ jobs:
       - name: Copy docker-compose to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
-          source: "docker-compose-prod.yml"
-          target: "~/deploy_${{ secrets.VPS_USER }}/"
+          host: localhost
+          source: "docker-compose-prod-swarm.yml"
+          target: "/app/deploy_${{ secrets.VPS_USER }}/"
           debug: true
 
       - name: Copy .env to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          host: localhost
           source: ".env"
-          target: "~/deploy_${{ secrets.VPS_USER }}/"
+          target: "/app/deploy_${{ secrets.VPS_USER }}/"
           debug: true
 
       - name: Run deployment on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          password: ${{ secrets.VPS_PASSWORD }}
+          host: localhost
           script: |
-            cd ~/deploy_${{ secrets.VPS_USER }}/
-            docker compose -f docker-compose-prod-swarm.yml pull
-            docker compose -f docker-compose-prod-swarm.yml up -d
+            cd /app/deploy_${{ secrets.VPS_USER }}/
+            docker stack deploy -c docker-compose-prod-swarm.yml dariusz
+            docker stack deploy -c docker-compose-prod-swarm.yml dariusz
