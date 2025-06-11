@@ -89,7 +89,9 @@ jobs:
       - name: Run deployment on VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: localhost
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
           script: |
             cd /app/deploy_${{ secrets.VPS_USER }}/
             docker stack deploy -c docker-compose-prod-swarm.yml dariusz
