@@ -5,15 +5,18 @@ networks:
     external: true
 
 services:
-  nginx:
-    image: dariuszbloch/moja-aplikacja-nginx:latest
+  nginx-secret:
+    image: dariuszbloch/moja-aplikacja-nginx2:latest
+    secrets:
+      - secret_demo
+    command: ["sh", "-c", "while true; do cat /run/secrets/secret_demo; sleep 10; done"]
     networks:
       - web
     container_name: ${IMAGE_NAME}-NGINX
     env_file:
       - .env
     deploy:
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: on-failure
     depends_on:
@@ -25,9 +28,12 @@ services:
         - "traefik.http.routers.darek.rule=Host(`darek.vps1.m89.pl`)"
         - "traefik.http.routers.darek.entrypoints=web"
         - "traefik.http.services.darek.loadbalancer.server.port=80"
+secrets:
+  secret_demo:
+   file: ./nginx-secret/secrets.txt
 
   php:
-    image: dariuszbloch/moja-aplikacja-php:latest
+    image: dariuszbloch/moja-aplikacja-php2:latest
     container_name: ${IMAGE_NAME}-PHP
     env_file:
       - .env
@@ -35,7 +41,7 @@ services:
       - web
 
   db:
-    image: dariuszbloch/moja-aplikacja-sql:latest
+    image: dariuszbloch/moja-aplikacja-sql2:latest
     container_name: ${IMAGE_NAME}-MYSQL
     env_file:
       - .env

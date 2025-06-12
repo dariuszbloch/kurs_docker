@@ -1,0 +1,12 @@
+services:
+  nginx-check:
+    image: registry.example.com/nginx-check:latest
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.nginx-check-darek.rule=Host(`check.vps1.m89.pl`)"
+        - "traefik.http.routers.nginx-check-darek.entrypoints=web"
+        - "traefik.http.services.nginx-check-darek.loadbalancer.server.port=80"
