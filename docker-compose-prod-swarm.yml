@@ -15,14 +15,12 @@ services:
     container_name: ${IMAGE_NAME}-NGINX
     env_file:
       - .env
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
     depends_on:
       - php
     deploy:
       replicas: 1
+      restart_policy:
+        condition: on-failure
       labels:
         - "traefik.enable=true"
         - "traefik.http.routers.darek.rule=Host(`darek.vps1.m89.pl`)"

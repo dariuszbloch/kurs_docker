@@ -94,5 +94,5 @@ jobs:
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
             cd /app/deploy_${{ secrets.VPS_USER }}/
-            docker stack deploy -c docker-compose-prod-swarm.yml dariusz
-            docker stack deploy -c docker-compose-prod-swarm.yml dariusz
+            docker stack deploy -c docker-compose-prod-swarm.yml dariusz-secret
+            docker stack deploy -c docker-compose-prod-swarm.yml dariusz-secret
