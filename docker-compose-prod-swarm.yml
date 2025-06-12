@@ -12,8 +12,10 @@ services:
     container_name: ${IMAGE_NAME}-NGINX
     env_file:
       - .env
-    ports:
-      - "8083:80"
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
     depends_on:
       - php
     deploy:
